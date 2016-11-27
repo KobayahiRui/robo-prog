@@ -1,3 +1,7 @@
-#Robot programming
+#ロボットプログラミング課題
 
-These are assignments of my class
+ロボットプログラミングの授業での課題を保存してある
+
+・kansudentaku : 関数電卓を作成
+
+・phon_book : 電話帳を作成data.txtに保存する機能付き
