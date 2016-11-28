@@ -7,7 +7,7 @@ struct person{
 	int id;
 	char name[50];//namae
 	long int phone;
-	char adoress[50];
+	char address[256];
 };
 
 void Regi(){                    //登録モード
@@ -15,7 +15,7 @@ void Regi(){                    //登録モード
 	char ser[50],dummy;
 	int c=0,i,resu=0,t,n,fid=0,l[50],idata[50],top[50],top2[50],pp;
 	long int y[50],e[50];
-	printf("How maney people??\n");
+	printf("How many people??\n");
 	scanf(" %d",&pp);
 	struct person data[pp+1];	
 	for(i=0;i<pp;i++){
@@ -28,34 +28,35 @@ void Regi(){                    //登録モード
 		scanf(" %50[^\n]",data[i].name);
 		printf("phone number --> ");
 		scanf(" %1d%ld",&top[i],&data[i].phone);
-		printf("adoress --> ");
-		scanf("%s",data[i].adoress);
+		printf("address --> ");
+		scanf("%s",data[i].address);
 	}
 	printf("\nRegistered--------------------------------------------\n");
 	for(i=0;i<pp;i++){
 		if(top[i]!=-1){
-			printf("ID: %d//name: %s//phone-number: %d%ld//adoress: %s\n",data[i].id ,data[i].name ,top[i],data[i].phone,data[i].adoress);
-			fprintf(fp,"ID: %d//name: %s//phone-number: %d%ld//adoress: %s\n",data[i].id,data[i].name,top[i] ,data[i].phone,data[i].adoress);
+			printf("ID: %d//name: %s//phone-number: %d%ld//address: %s\n",data[i].id ,data[i].name ,top[i],data[i].phone,data[i].address);
+			fprintf(fp,"ID: %d//name: %s//phone-number: %d%ld//address: %s\n",data[i].id,data[i].name,top[i] ,data[i].phone,data[i].address);
 			
 		}
 		else{
-			printf("ID: %d//name: %s//phone-number: %ld//adoress: %s\n",data[i].id,data[i].name ,data[i].phone,data[i].adoress);
-			fprintf(fp,"ID: %d//name: %s//phone-number: %ld//adoress: %s\n",data[i].id,data[i].name ,data[i].phone,data[i].adoress);
+			printf("ID: %d//name: %s//phone-number: %ld//address: %s\n",data[i].id,data[i].name ,data[i].phone,data[i].address);
+			fprintf(fp,"ID: %d//name: %s//phone-number: %ld//address: %s\n",data[i].id,data[i].name ,data[i].phone,data[i].address);
 		}
 	}
 	printf("------------------------------------------------------\n");
-	
 	fclose(fp);
 }
+
+
 void Ser(){			//検索モード
-	char ser[50],name[50][50],ado[50][50];
+	char ser[50],name[50][50],add[50][50];
 	int c=0,t,n,fid=0,l[50],top2[50],pp;
 	long int e[50];
 
 	fp = fopen("data.txt","r");
 	printf("serch\n");
 	scanf(" %50[^\n]",ser);
-	while((fscanf(fp,"%*s %d//%*s %[^\n//]//%*s %1d%ld//%*s %s",&l[c],name[c],&top2[c],&e[c],ado[c]))!=EOF){
+	while((fscanf(fp,"%*s %d//%*s %[^\n//]//%*s %1d%ld//%*s %s",&l[c],name[c],&top2[c],&e[c],add[c]))!=EOF){
 		c++;
 	}
 	for(t=0;t<=c;t++){
@@ -67,27 +68,26 @@ void Ser(){			//検索モード
 		}
 	}
 	if(fid){
-	printf("------------------------------------------------------\n");
+		printf("------------------------------------------------------\n");
 		printf("ID: %d\n",l[t]);
 		printf("name: %s\n",name[t]);
 		printf("phone-number: %d%ld\n",top2[t],e[t]);
-		printf("adoress: %s\n",ado[t]); 
-	printf("------------------------------------------------------\n");
+		printf("address: %s\n",add[t]); 
+		printf("------------------------------------------------------\n");
 	}else{
 		printf("not found...\n");
 	}
-	
 	fclose(fp);
 }
 void IDser(){			//ID検索モード
-	char name[50][50],ado[50][50];
+	char name[50][50],add[50][50];
 	int c=0,t,n,fid=0,l[50],top2[50],pp,ids;
 	long int e[50];
 
 	fp = fopen("data.txt","r");
 	printf("serch\n");
 	scanf(" %d",&ids);
-	while((fscanf(fp,"%*s %d//%*s %[^\n//]//%*s %1d%ld//%*s %s",&l[c],name[c],&top2[c],&e[c],ado[c]))!=EOF){
+	while((fscanf(fp,"%*s %d//%*s %[^\n//]//%*s %1d%ld//%*s %s",&l[c],name[c],&top2[c],&e[c],add[c]))!=EOF){
 		c++;
 	}
 	for(t=0;t<=c;t++){
@@ -99,38 +99,40 @@ void IDser(){			//ID検索モード
 		}
 	}
 	if(fid){
-	printf("------------------------------------------------------\n");
+		printf("------------------------------------------------------\n");
 		printf("ID: %d\n",l[t]);
 		printf("name: %s\n",name[t]);
 		printf("phone-number: %d%ld\n",top2[t],e[t]);
-		printf("adoress: %s\n",ado[t]);
-	printf("------------------------------------------------------\n");
+		printf("address: %s\n",add[t]);
+		printf("------------------------------------------------------\n");
 	}else{
 		printf("not find...\n");
 	}	
 	fclose(fp);
 }
+
+
 void cl(){		//ファイルデータ削除
 	fp = fopen("data.txt","w");
 	fclose(fp);
 }
 
 void list(){		//ファイル内データリスト	
-	char name[50][50],ado[50][50];
+	char name[50][50],add[50][50];
 	int c=0,t,l[50],top2[50];
 	long int e[50];
 	fp = fopen("data.txt","r");
-	while((fscanf(fp,"%*s %d//%*s %[^\n//]//%*s %1d%ld//%*s %s",&l[c],name[c],&top2[c],&e[c],ado[c]))!=EOF){
+	while((fscanf(fp,"%*s %d//%*s %[^\n//]//%*s %1d%ld//%*s %s",&l[c],name[c],&top2[c],&e[c],add[c]))!=EOF){
 		c++;
 	}
 	printf("ok\n");
 	for(t=0;t<=c-1;t++){
-	printf("------------------------------------------------------\n");
+		printf("------------------------------------------------------\n");
 		printf("ID: %d\n",l[t]);
 		printf("name: %s\n",name[t]);
 		printf("phone-number: %d%ld\n",top2[t],e[t]);
-		printf("adoress: %s\n",ado[t]);
-	printf("------------------------------------------------------\n");
+		printf("address: %s\n",add[t]);
+		printf("------------------------------------------------------\n");
 	}
 }
 
