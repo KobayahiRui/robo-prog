@@ -14,8 +14,9 @@ struct person{
 void Regi(){                    //登録モード
 	fp = fopen("data.txt","a");
 	char ser[50],dummy;
-	int c=0,i,resu=0,t,n,fid=0,idata[50],top[50],top2[50],pp;
+	int i,top[50],pp;
 	long int y[50],e[50];
+
 	printf("How many people??\n");
 	scanf(" %d",&pp);
 	struct person data[pp];	
@@ -38,8 +39,7 @@ void Regi(){                    //登録モード
 			printf("ID: %s//name: %s//phone-number: %d%ld//address: %s\n",data[i].id ,data[i].name ,top[i],data[i].phone,data[i].address);
 			fprintf(fp,"ID: %s//name: %s//phone-number: %d%ld//address: %s\n",data[i].id,data[i].name,top[i] ,data[i].phone,data[i].address);
 			
-		}
-		else{
+		}else{
 			printf("ID: %s//name: %s//phone-number: %ld//address: %s\n",data[i].id,data[i].name ,data[i].phone,data[i].address);
 			fprintf(fp,"ID: %s//name: %s//phone-number: %ld//address: %s\n",data[i].id,data[i].name ,data[i].phone,data[i].address);
 		}
@@ -124,6 +124,7 @@ void iddel(){
 	char name[50][50],add[50][50],l[50][15],ids[15];
 	int c=0,t,n,fid=0,top2[50],pp,i;
 	long int e[50];
+
 	fp = fopen("data.txt","r");
 	printf("serch\n");
 	scanf(" %s",ids);
@@ -165,7 +166,7 @@ void iddel(){
 	}
 }
 
-void namedel(){			
+void namedel(){		//名前削除	
 	char ser[50],name[50][50],add[50][50],l[50][15];
 	int c=0,t,n,fid=0,top2[50],pp,i;
 	long int e[50];
@@ -229,28 +230,30 @@ void list(){		//ファイル内データリスト
 	}
 }
 
-void pass(){
+void pass(){	//パスワード設定
 	char pas[50],cp[50];
+
 	fp=fopen("pass.txt","r");
 	fscanf(fp,"%*s %s",pas);
 	printf("Change password\n");
 	printf("(current)Please enter your password: ");
 	scanf("%s",cp);
 	fclose(fp);
+
 	if(!strcmp(pas,cp)){
-	fp=fopen("pass.txt","w");
-	printf("Please enter your new password: ");
-	scanf("%s",pas);
-	fprintf(fp,"password: %s",pas);
-	fclose(fp);
-	}
-	else{
+		fp=fopen("pass.txt","w");
+		printf("Please enter your new password: ");
+		scanf("%s",pas);
+		fprintf(fp,"password: %s",pas);
+		fclose(fp);
+	}else{
 		printf("not password\n");
 	}
 }
 
 int main(){
 	char spass[50],copass[50],flg=0;
+
 	fp=fopen("pass.txt","r");
 	if(fp==NULL){
 		printf("Please make pass.txt\n(This is the file to save the password)\n");
@@ -278,6 +281,7 @@ int main(){
 	if(flg){
 	while(1){
 		char mode;
+
 		printf("mode select (Registration:r Search:s IDserch:i IDdelete:d namedelete:D list:l clear:c passwordchange:p end:q)\n");
 		scanf(" %[pDdlrscqi]",&mode);
 		switch(mode){
