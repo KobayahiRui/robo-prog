@@ -11,7 +11,7 @@ struct person{
 };
 
 
-void Regi(){                    //$BEPO?%b!<%I(B
+void Regi(){                    //登録モード
 	fp = fopen("data.txt","a");
 	char ser[50],dummy;
 	int i,top[50],pp;
@@ -49,7 +49,7 @@ void Regi(){                    //$BEPO?%b!<%I(B
 }
 
 
-void Ser(){			//$B8!:w%b!<%I(B
+void Ser(){			//検索モード
 	char ser[50],name[50][50],add[50][50],l[50][15];
 	int c=0,t,n,fid=0,top2[50],pp;
 	long int e[50];
@@ -82,7 +82,7 @@ void Ser(){			//$B8!:w%b!<%I(B
 }
 
 
-void IDser(){			//ID$B8!:w%b!<%I(B
+void IDser(){			//ID検索モード
 	char name[50][50],add[50][50],ids[15],l[50][15];
 	int c=0,t,n,fid=0,top2[50],pp;
 	long int e[50];
@@ -115,7 +115,7 @@ void IDser(){			//ID$B8!:w%b!<%I(B
 }
 
 
-void cl(){		//$B%U%!%$%k%G!<%?:o=|(B
+void cl(){		//ファイルデータ削除
 	fp = fopen("data.txt","w");
 	fclose(fp);
 }
@@ -166,7 +166,7 @@ void iddel(){
 	}
 }
 
-void namedel(){		//$BL>A0:o=|(B	
+void namedel(){		//名前削除	
 	char ser[50],name[50][50],add[50][50],l[50][15];
 	int c=0,t,n,fid=0,top2[50],pp,i;
 	long int e[50];
@@ -211,7 +211,7 @@ void namedel(){		//$BL>A0:o=|(B
 	}
 }
 
-void list(){		//$B%U%!%$%kFb%G!<%?%j%9%H(B	
+void list(){		//ファイル内データリスト	
 	char name[50][50],add[50][50],l[50][15];
 	int c=0,t,top2[50];
 	long int e[50];
@@ -230,7 +230,7 @@ void list(){		//$B%U%!%$%kFb%G!<%?%j%9%H(B
 	}
 }
 
-void pass(){	//$B%Q%9%o!<%I@_Dj(B
+void pass(){	//パスワード設定
 	char pas[50],cp[50];
 
 	fp=fopen("pass.txt","r");
