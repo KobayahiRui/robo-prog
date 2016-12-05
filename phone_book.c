@@ -253,13 +253,14 @@ void pass(){	//パスワード設定
 
 int main(){
 	char spass[50],copass[50],flg=0;
-
+	fp=fopen("pass.txt","a");
+	fclose(fp);
 	fp=fopen("pass.txt","r");
-	if(fp==NULL){
+	/*if(fp==NULL){
 		printf("Please make pass.txt\n(This is the file to save the password)\n");
 		exit(0);
 		return -1;
-	}
+	}*/
 	if(fscanf(fp,"%*s %s",spass)==EOF){
 		fclose(fp);
 		fp=fopen("pass.txt","w");
