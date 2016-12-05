@@ -4,10 +4,10 @@
 
 FILE *fp;
 struct person{
-	char id[15];
-	char name[50];//namae
-	long int phone;
-	char address[256];
+	char id[15];//ID
+	char name[50];//名前
+	long int phone;//電話番号
+	char address[256];//アドレス
 };
 
 
@@ -115,12 +115,12 @@ void IDser(){			//ID検索モード
 }
 
 
-void cl(){		//ファイルデータ削除
+void cl(){		//ファイル内データをすべて削除
 	fp = fopen("data.txt","w");
 	fclose(fp);
 }
 
-void iddel(){
+void iddel(){		//ID検索して削除
 	char name[50][50],add[50][50],l[50][15],ids[15];
 	int c=0,t,n,fid=0,top2[50],pp,i;
 	long int e[50];
@@ -166,7 +166,7 @@ void iddel(){
 	}
 }
 
-void namedel(){		//名前削除	
+void namedel(){		//名前検索をして削除	
 	char ser[50],name[50][50],add[50][50],l[50][15];
 	int c=0,t,n,fid=0,top2[50],pp,i;
 	long int e[50];
@@ -219,7 +219,6 @@ void list(){		//ファイル内データリスト
 	while((fscanf(fp,"%*s %[^\n/]//%*s %[^\n/]//%*s %1d%ld//%*s %s",l[c],name[c],&top2[c],&e[c],add[c]))!=EOF){
 		c++;
 	}
-	printf("ok\n");
 	for(t=0;t<c;t++){
 		printf("------------------------------------------------------\n");
 		printf("ID: %s\n",l[t]);
@@ -280,43 +279,43 @@ int main(){
 	}
 
 	if(flg){
-	while(1){
-		char mode;
+		while(1){
+			char mode;
 
-		printf("mode select (Registration:r Search:s IDserch:i IDdelete:d namedelete:D list:l clear:c passwordchange:p end:q)\n");
-		scanf(" %[pDdlrscqi]",&mode);
-		switch(mode){
-			case 'r':
-				Regi();
-				break;
-			case 's':
-				Ser();
-				break;
-			case 'i':
-				IDser();
-				break;
-			case 'd':
-				iddel();
-				break;
-			case 'D':
-				namedel();
-				break;
-			case 'l':
-				list();
-				break;
-			case 'c':
-				cl();
-				printf("clear\n");
-				break;
-			case 'p':
-				pass();
-				break;
-			case 'q':
-				printf("finish\n");
-				exit(0);
+			printf("mode select (Registration:r Search:s IDserch:i IDdelete:d namedelete:D list:l clear:c passwordchange:p end:q)\n");
+			scanf(" %[pDdlrscqi]",&mode);
+			switch(mode){
+				case 'r':
+					Regi();
+					break;
+				case 's':
+					Ser();
+					break;
+				case 'i':
+					IDser();
+					break;
+				case 'd':
+					iddel();
+					break;
+				case 'D':
+					namedel();
+					break;
+				case 'l':
+					list();
+					break;
+				case 'c':
+					cl();
+					printf("clear\n");
+					break;
+				case 'p':
+					pass();
+					break;
+				case 'q':
+					printf("finish\n");
+					exit(0);
+			}
 		}
-	}
 	}else{
-		printf("not pass\n");
+		printf("Password is incorrect\n");
 	}
 }	
