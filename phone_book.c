@@ -12,7 +12,8 @@ struct person{
 
 void help(){
 	printf("mode command list-------------------------------------\n");
-	printf("Registration\t: r\nSearch\t\t: s\nIDserch\t\t: i\nIDdelete\t: d\nnamedelete\t: D\nlist\t\t: l\nclear\t\t: c\npasswordchange\t: p\nend\t\t: q\ntrash can list\t: t\ntrash can clear\t: C\nreborn\t\t: R\n");
+	printf("Registration\t: r\nSearch\t\t: s\nIDserch\t\t: i\nIDdelete\t: d\nnamedelete\t: D\n");
+	printf("list\t\t: l\nclear\t\t: c\npasswordchange\t: p\nend\t\t: q\ntrash can list\t: t\ntrash can clear\t: C\nreborn\t\t: R\n");
 	printf("-----------------------------------------------------\n");
 }
 
