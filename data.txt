@@ -1,0 +1,2 @@
+ID: 16C1057//name: kobayashi rui//phone-number: 09092023153//address: kobayashi.rui@gmail.com
+ID: 16C1034//name: osanai yosito//phone-number: 08029283934//address: chado@gmail.com

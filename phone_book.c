@@ -2,13 +2,19 @@
 #include<string.h>
 #include<stdlib.h>
 
-FILE *fp;
+FILE *fp,*fp2;
 struct person{
 	char id[15];//ID
 	char name[50];//名前
 	long int phone;//電話番号
 	char address[256];//アドレス
 };
+
+void help(){
+	printf("mode command list-------------------------------------\n");
+	printf("Registration\t: r\nSearch\t\t: s\nIDserch\t\t: i\nIDdelete\t: d\nnamedelete\t: D\nlist\t\t: l\nclear\t\t: c\npasswordchange\t: p\nend\t\t: q\ntrash can list\t: t\ntrash can clear\t: C\nreborn\t\t: R\n");
+	printf("-----------------------------------------------------\n");
+}
 
 
 void Regi(){                    //登録モード
@@ -21,9 +27,7 @@ void Regi(){                    //登録モード
 	scanf(" %d",&pp);
 	struct person data[pp];	
 	for(i=0;i<pp;i++){
-		top[i]=-1;
 		printf("No.%d\n",i+1);
-	
 		printf("ID --> ");
 		scanf("%s",data[i].id);
 		printf("name --> ");
@@ -35,14 +39,9 @@ void Regi(){                    //登録モード
 	}
 	printf("\nRegistered--------------------------------------------\n");
 	for(i=0;i<pp;i++){
-		if(top[i]!=-1){
 			printf("ID: %s//name: %s//phone-number: %d%ld//address: %s\n",data[i].id ,data[i].name ,top[i],data[i].phone,data[i].address);
 			fprintf(fp,"ID: %s//name: %s//phone-number: %d%ld//address: %s\n",data[i].id,data[i].name,top[i] ,data[i].phone,data[i].address);
 			
-		}else{
-			printf("ID: %s//name: %s//phone-number: %ld//address: %s\n",data[i].id,data[i].name ,data[i].phone,data[i].address);
-			fprintf(fp,"ID: %s//name: %s//phone-number: %ld//address: %s\n",data[i].id,data[i].name ,data[i].phone,data[i].address);
-		}
 	}
 	printf("------------------------------------------------------\n");
 	fclose(fp);
@@ -61,7 +60,6 @@ void Ser(){			//検索モード
 		c++;
 	}
 	for(t=0;t<=c;t++){
-		//printf("%s\n",name[t]);
 		if(!strcmp(name[t],ser)){
 			printf("found!!\n");
 			fid=1;
@@ -94,7 +92,6 @@ void IDser(){			//ID検索モード
 		c++;
 	}
 	for(t=0;t<=c;t++){
-		//printf("%s\n",l[t]);
 		if(!strcmp(l[t],ids)){
 			printf("found!!\n");
 			fid=1;
@@ -116,7 +113,20 @@ void IDser(){			//ID検索モード
 
 
 void cl(){		//ファイル内データをすべて削除
-	fp = fopen("data.txt","w");
+	char ser[50],name[50][50],add[50][50],l[50][15];
+	int c=0,t,n,fid=0,top2[50],pp,i;
+	long int e[50];
+	fp= fopen("data.txt","r");
+	while((fscanf(fp,"%*s %[^\n/]//%*s %[^\n/]//%*s %1d%ld//%*s %s",l[c],name[c],&top2[c],&e[c],add[c]))!=EOF){
+		c++;
+	}
+	fclose(fp);
+	fp= fopen("trash.txt","a");
+	for(i=0;i<c;i++){
+		fprintf(fp,"ID: %s//name: %s//phone-number: %d%ld//address: %s\n",l[i],name[i],top2[i],e[i],add[i]);
+	}	
+	fclose(fp);
+	fp=fopen("data.txt","w");
 	fclose(fp);
 }
 
@@ -139,6 +149,7 @@ void iddel(){		//ID検索して削除
 		}
 	}
 	if(fid){
+		fp2 = fopen("trash.txt","a");
 		printf("------------------------------------------------------\n");
 		printf("ID: %s\n",l[t]);
 		printf("name: %s\n",name[t]);
@@ -146,6 +157,8 @@ void iddel(){		//ID検索して削除
 		printf("address: %s\n",add[t]);
 		printf("------------------------------------------------------\n");	
 		printf("delete....\n");
+		fprintf(fp2,"ID: %s//name: %s//phone-number: %d%ld//address: %s\n",l[t],name[t],top2[t],e[t],add[t]);
+		fclose(fp2);
 	}else{
 		printf("not found...\n");
 	}
@@ -156,12 +169,8 @@ void iddel(){		//ID検索して削除
 			if(i==t){
 				continue;
 			}
-			if(top2[i]!=-1){
-				fprintf(fp,"ID: %s//name: %s//phone-number: %d%ld//address: %s\n",l[i],name[i],top2[i],e[t],add[t]);
-			}else{
-				fprintf(fp,"ID: %s//name: %s//phone-number: %ld//address: %s\n",l[i],name[i],e[t],add[t]);
+				fprintf(fp,"ID: %s//name: %s//phone-number: %d%ld//address: %s\n",l[i],name[i],top2[i],e[i],add[i]);
 			}	
-		}	
 		fclose(fp);
 	}
 }
@@ -171,13 +180,13 @@ void namedel(){		//名前検索をして削除
 	int c=0,t,n,fid=0,top2[50],pp,i;
 	long int e[50];
 	fp = fopen("data.txt","r");
+	fp2 = fopen("trash.txt","a");
 	printf("serch\n");
 	scanf(" %50[^\n]",ser);
 	while((fscanf(fp,"%*s %[^\n/]//%*s %[^\n/]//%*s %1d%ld//%*s %s",l[c],name[c],&top2[c],&e[c],add[c]))!=EOF){
 		c++;
 	}
 	for(t=0;t<=c;t++){
-		//printf("%s\n",name[t]);
 		if(!strcmp(name[t],ser)){
 			printf("found!!\n");
 			fid=1;
@@ -186,12 +195,15 @@ void namedel(){		//名前検索をして削除
 	}
 	fclose(fp);
 	if(fid){
+		fp2 = fopen("trash.txt","a");
 		printf("------------------------------------------------------\n");
 		printf("ID: %s\n",l[t]);
 		printf("name: %s\n",name[t]);
 		printf("phone-number: %d%ld\n",top2[t],e[t]);
 		printf("address: %s\n",add[t]); 
 		printf("------------------------------------------------------\n");
+		fprintf(fp2,"ID: %s//name: %s//phone-number: %d%ld//address: %s\n",l[t],name[t],top2[t],e[t],add[t]);
+		fclose(fp2);
 	}else{
 		printf("not found...\n");
 	}
@@ -201,15 +213,11 @@ void namedel(){		//名前検索をして削除
 			if(i==t){
 				continue;
 			}
-			if(top2[i]!=-1){
-				fprintf(fp,"ID: %s//name: %s//phone-number: %d%ld//address: %s\n",l[i],name[i],top2[i],e[t],add[t]);
-			}else{
-				fprintf(fp,"ID: %s//name: %s//phone-number: %ld//address: %s\n",l[i],name[i],e[t],add[t]);
-			}	
-		}	
+				fprintf(fp,"ID: %s//name: %s//phone-number: %d%ld//address: %s\n",l[i],name[i],top2[i],e[i],add[i]);
 		fclose(fp);
+		}
 	}
-}
+}	
 
 void list(){		//ファイル内データリスト	
 	char name[50][50],add[50][50],l[50][15];
@@ -227,6 +235,7 @@ void list(){		//ファイル内データリスト
 		printf("address: %s\n",add[t]);
 		printf("------------------------------------------------------\n");
 	}
+	fclose(fp);
 }
 
 void pass(){	//パスワード設定
@@ -250,16 +259,96 @@ void pass(){	//パスワード設定
 	}
 }
 
+void tra(){
+	char name[50][50],add[50][50],l[50][15];
+	int c=0,t,top2[50];
+	long int e[50];
+	fp = fopen("trash.txt","r");
+	while((fscanf(fp,"%*s %[^\n/]//%*s %[^\n/]//%*s %1d%ld//%*s %s",l[c],name[c],&top2[c],&e[c],add[c]))!=EOF){
+		c++;
+	}
+	for(t=0;t<c;t++){
+		printf("------------------------------------------------------\n");
+		printf("ID: %s\n",l[t]);
+		printf("name: %s\n",name[t]);
+		printf("phone-number: %d%ld\n",top2[t],e[t]);
+		printf("address: %s\n",add[t]);
+		printf("------------------------------------------------------\n");
+	}
+	fclose(fp);
+}
+
+void trac(){
+	fp=fopen("trash.txt","w");
+	fclose(fp);
+}
+
+void re(){
+	char name[50][50],add[50][50],l[50][15],ser[50];
+	int c=0,t,n,fid=0,top2[50],pp,i;
+	long int e[50];
+
+	fp = fopen("trash.txt","r");
+	printf("serch\n");
+	scanf(" %[^\n]",ser);
+	while((fscanf(fp,"%*s %[^\n/]//%*s %[^\n/]//%*s %1d%ld//%*s %s",l[c],name[c],&top2[c],&e[c],add[c]))!=EOF){
+		c++;
+	}
+	
+	for(t=0;t<c;t++){
+		if(!strcmp(l[t],ser)){
+			printf("found!!\n");
+			fid=1;
+			break;
+		}
+	}
+	if(!fid){
+		for(t=0;t<c;t++){
+			if(!strcmp(name[t],ser)){
+				printf("found!!\n");
+				fid=1;
+				break;
+			}
+		}
+	}
+
+	if(fid){
+		fp2 = fopen("data.txt","a");
+		printf("------------------------------------------------------\n");
+		printf("ID: %s\n",l[t]);
+		printf("name: %s\n",name[t]);
+		printf("phone-number: %d%ld\n",top2[t],e[t]);
+		printf("address: %s\n",add[t]);
+		printf("------------------------------------------------------\n");	
+		printf("reborn....\n");
+		fprintf(fp2,"ID: %s//name: %s//phone-number: %d%ld//address: %s\n",l[t],name[t],top2[t],e[t],add[t]);
+		fclose(fp2);
+	}else{
+		printf("not found...\n");
+	}
+	fclose(fp);
+	if(fid){
+		fp =fopen("trash.txt","w");	
+		for(i=0;i<c;i++){
+			if(i==t){
+				continue;
+			}
+				fprintf(fp,"ID: %s//name: %s//phone-number: %d%ld//address: %s\n",l[i],name[i],top2[i],e[i],add[i]);
+			}	
+		fclose(fp);
+	}
+}
+
+
 int main(){
 	char spass[50],copass[50],flg=0;
 	fp=fopen("pass.txt","a");
 	fclose(fp);
+	fp=fopen("data.txt","a");
+	fclose(fp);
+	fp=fopen("trash.txt","a");
+	fclose(fp);
 	fp=fopen("pass.txt","r");
-	/*if(fp==NULL){
-		printf("Please make pass.txt\n(This is the file to save the password)\n");
-		exit(0);
-		return -1;
-	}*/
 	if(fscanf(fp,"%*s %s",spass)==EOF){
 		fclose(fp);
 		fp=fopen("pass.txt","w");
@@ -282,9 +371,12 @@ int main(){
 		while(1){
 			char mode;
 
-			printf("mode select (Registration:r Search:s IDserch:i IDdelete:d namedelete:D list:l clear:c passwordchange:p end:q)\n");
-			scanf(" %[pDdlrscqi]",&mode);
+			printf("mode select (h:help)\n");
+			scanf(" %1[RtpDdlrscqiCh]",&mode);
 			switch(mode){
+				case 'h':
+					help();
+					break;
 				case 'r':
 					Regi();
 					break;
@@ -307,15 +399,27 @@ int main(){
 					cl();
 					printf("clear\n");
 					break;
+				case 'C':
+					trac();
+					break;
 				case 'p':
 					pass();
 					break;
 				case 'q':
 					printf("finish\n");
 					exit(0);
+				case 't':
+					printf("trash can data\n");
+					tra();
+					break;
+				case 'R':
+					printf("reborn id serch\n");
+					re();
+					break;
 			}
 		}
 	}else{
 		printf("Password is incorrect\n");
 	}
-}	
+return 0;
+}
