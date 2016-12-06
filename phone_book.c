@@ -117,6 +117,7 @@ void cl(){		//ファイル内データをすべて削除
 	char ser[50],name[50][50],add[50][50],l[50][15];
 	int c=0,t,n,fid=0,top2[50],pp,i;
 	long int e[50];
+
 	fp= fopen("data.txt","r");
 	while((fscanf(fp,"%*s %[^\n/]//%*s %[^\n/]//%*s %1d%ld//%*s %s",l[c],name[c],&top2[c],&e[c],add[c]))!=EOF){
 		c++;
@@ -180,6 +181,7 @@ void namedel(){		//名前検索をして削除
 	char ser[50],name[50][50],add[50][50],l[50][15];
 	int c=0,t,n,fid=0,top2[50],pp,i;
 	long int e[50];
+
 	fp = fopen("data.txt","r");
 	fp2 = fopen("trash.txt","a");
 	printf("serch\n");
@@ -224,6 +226,7 @@ void list(){		//ファイル内データリスト
 	char name[50][50],add[50][50],l[50][15];
 	int c=0,t,top2[50];
 	long int e[50];
+
 	fp = fopen("data.txt","r");
 	while((fscanf(fp,"%*s %[^\n/]//%*s %[^\n/]//%*s %1d%ld//%*s %s",l[c],name[c],&top2[c],&e[c],add[c]))!=EOF){
 		c++;
@@ -260,10 +263,11 @@ void pass(){	//パスワード設定
 	}
 }
 
-void tra(){
+void tra(){	//ゴミ箱内のリスト
 	char name[50][50],add[50][50],l[50][15];
 	int c=0,t,top2[50];
 	long int e[50];
+
 	fp = fopen("trash.txt","r");
 	while((fscanf(fp,"%*s %[^\n/]//%*s %[^\n/]//%*s %1d%ld//%*s %s",l[c],name[c],&top2[c],&e[c],add[c]))!=EOF){
 		c++;
@@ -279,12 +283,12 @@ void tra(){
 	fclose(fp);
 }
 
-void trac(){
+void trac(){	//ゴミ箱内のデータをすべて削除
 	fp=fopen("trash.txt","w");
 	fclose(fp);
 }
 
-void re(){
+void re(){	//ゴミ箱からデータを戻す
 	char name[50][50],add[50][50],l[50][15],ser[50];
 	int c=0,t,n,fid=0,top2[50],pp,i;
 	long int e[50];
@@ -343,12 +347,11 @@ void re(){
 
 int main(){
 	char spass[50],copass[50],flg=0;
-	fp=fopen("pass.txt","a");
-	fclose(fp);
-	fp=fopen("data.txt","a");
-	fclose(fp);
-	fp=fopen("trash.txt","a");
-	fclose(fp);
+
+	fp=fopen("pass.txt","a");fclose(fp);
+	fp=fopen("data.txt","a");fclose(fp);
+	fp=fopen("trash.txt","a");fclose(fp);
+
 	fp=fopen("pass.txt","r");
 	if(fscanf(fp,"%*s %s",spass)==EOF){
 		fclose(fp);
@@ -373,7 +376,7 @@ int main(){
 			char mode;
 
 			printf("mode select (h:help)\n");
-			scanf(" %1[RtpDdlrscqiCh]",&mode);
+			scanf(" %c",&mode);
 			switch(mode){
 				case 'h':
 					help();
@@ -417,10 +420,12 @@ int main(){
 					printf("reborn id serch\n");
 					re();
 					break;
+				default:
+					printf("There is no command\n");
 			}
 		}
 	}else{
 		printf("Password is incorrect\n");
 	}
-return 0;
+	return 0;
 }
