@@ -348,7 +348,7 @@ void re(){	//ゴミ箱からデータを戻す
 int main(){
 	char spass[50],copass[50],flg=0;
 
-	fp=fopen("pass.txt","a");fclose(fp);
+	fp=fopen("pass.txt","a");fclose(fp);//ファイルを作成（エラー回避）
 	fp=fopen("data.txt","a");fclose(fp);
 	fp=fopen("trash.txt","a");fclose(fp);
 
